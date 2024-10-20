@@ -18,12 +18,48 @@ async function fetchPokemon() {
 
 // Card component
 function PokemonCard(props) {
+  const typeStyles = {
+    grass: "bg-green-700 rounded-sm p-1 m-1 w-16 text-center text-white",
+    poison: "bg-purple-500 rounded-sm p-1 m-1 w-16 text-center text-white",
+    fire: "bg-red-500 rounded-sm p-1 m-1 w-16 text-center text-white",
+    flying: "bg-blue-300 rounded-sm p-1 m-1 w-16 text-center text-white",
+    water: "bg-blue-500 rounded-sm p-1 m-1 w-16 text-center text-white",
+    bug: "bg-green-500 rounded-sm p-1 m-1 w-16 text-center text-white",
+    normal: "bg-gray-500 rounded-sm p-1 m-1 w-16 text-center text-white",
+  };
   return React.createElement(
     "div",
-    { className: "" },
-    React.createElement("img", { src: props.image, alt: props.name }),
-    React.createElement("h2", null, props.name),
-    React.createElement("p", null, `Type: ${props.types}`)
+    {
+      className:
+        "bg-[white]/20 rounded-md m-1 w-1/4 flex flex-col justify-center items-center font-mono",
+    },
+    React.createElement("img", {
+      className: "",
+      src: props.image,
+      alt: props.name,
+    }),
+
+    React.createElement(
+      "h2",
+      { className: "text-white text-center text-lg" },
+      null,
+      props.name
+    ),
+    React.createElement(
+      "div",
+      { className: "flex" },
+      React.createElement("p"),
+      props.types.map((t) =>
+        React.createElement(
+          "span",
+          {
+            key: t,
+            className: typeStyles[t],
+          },
+          t
+        )
+      )
+    )
   );
 }
 
@@ -44,7 +80,7 @@ function PokemonList() {
       React.createElement(PokemonCard, {
         key: pokemon.id,
         name: pokemon.name,
-        types: pokemon.types.join("/"),
+        types: pokemon.types,
         image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`,
       })
     )
@@ -61,8 +97,8 @@ function App() {
       { className: "" },
       React.createElement(
         "h1",
-        { className: "text-3xl text-center font-bold underline" },
-        "Pokedex"
+        { className: "text-yellow-400 text-3xl text-center font-bold m-3" },
+        "Pokédex"
       )
     ),
     React.createElement(PokemonList, null)
