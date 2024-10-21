@@ -19,44 +19,60 @@ async function fetchPokemon() {
 // Card component
 function PokemonCard(props) {
   const typeStyles = {
-    grass: "bg-green-700 rounded-sm p-1 m-1 w-16 text-center text-white",
-    poison: "bg-purple-500 rounded-sm p-1 m-1 w-16 text-center text-white",
-    fire: "bg-red-500 rounded-sm p-1 m-1 w-16 text-center text-white",
-    flying: "bg-blue-300 rounded-sm p-1 m-1 w-16 text-center text-white",
-    water: "bg-blue-500 rounded-sm p-1 m-1 w-16 text-center text-white",
-    bug: "bg-green-500 rounded-sm p-1 m-1 w-16 text-center text-white",
-    normal: "bg-gray-500 rounded-sm p-1 m-1 w-16 text-center text-white",
+    grass: "bg-green-700 rounded-sm p-1 m-1 w-20 text-center text-white",
+    poison: "bg-purple-500 rounded-sm p-1 m-1 w-20 text-center text-white",
+    fire: "bg-red-500 rounded-sm p-1 m-1 w-20 text-center text-white",
+    flying: "bg-blue-300 rounded-sm p-1 m-1 w-20 text-center text-white",
+    water: "bg-blue-500 rounded-sm p-1 m-1 w-20 text-center text-white",
+    bug: "bg-green-500 rounded-sm p-1 m-1 w-20 text-center text-white",
+    normal: "bg-gray-500 rounded-sm p-1 m-1 w-20 text-center text-white",
+    electric: "bg-yellow-400 rounded-sm p-1 m-1 w-20 text-center text-white",
+    ground: "bg-yellow-900 rounded-sm p-1 m-1 w-20 text-center text-white",
+    fairy: "bg-pink-500 rounded-sm p-1 m-1 w-20 text-center text-white",
+    fighting: "bg-yellow-600 rounded-sm p-1 m-1 w-20 text-center text-white",
+    psychic: "bg-pink-700 rounded-sm p-1 m-1 w-20 text-center text-white",
+    rock: "bg-neutral-700 rounded-sm p-1 m-1 w-20 text-center text-white",
+    steel: "bg-neutral-400 rounded-sm p-1 m-1 w-20 text-center text-white",
+    ghost: "bg-indigo-800 rounded-sm p-1 m-1 w-20 text-center text-white",
+    ice: "bg-blue-300 rounded-sm p-1 m-1 w-20 text-center text-white",
   };
   return React.createElement(
     "div",
     {
       className:
-        "bg-[white]/20 rounded-md m-1 w-1/4 flex flex-col justify-center items-center font-mono",
+        // "bg-[white]/20 rounded-md m-1 w-1/4 flex flex-col justify-center items-center font-mono",
+        "m-2 relative",
     },
-    React.createElement("img", {
-      className: "",
-      src: props.image,
-      alt: props.name,
-    }),
-
-    React.createElement(
-      "h2",
-      { className: "text-white text-center text-lg" },
-      null,
-      props.name
-    ),
     React.createElement(
       "div",
-      { className: "flex" },
-      React.createElement("p"),
-      props.types.map((t) =>
-        React.createElement(
-          "span",
-          {
-            key: t,
-            className: typeStyles[t],
-          },
-          t
+      {
+        className:
+          "bg-[white]/20 rounded-md flex flex-col justify-center items-center font-mono  h-80 w-52",
+      },
+      React.createElement("img", {
+        className: "w-44 transition-transform hover:scale-125 duration-200",
+        src: props.image,
+        alt: props.name,
+      }),
+      React.createElement(
+        "h2",
+        { className: "text-white text-center text-xl" },
+        null,
+        props.name
+      ),
+      React.createElement(
+        "div",
+        { className: "flex" },
+        React.createElement("p"),
+        props.types.map((t) =>
+          React.createElement(
+            "span",
+            {
+              key: t,
+              className: typeStyles[t],
+            },
+            t
+          )
         )
       )
     )
@@ -95,12 +111,18 @@ function App() {
     React.createElement(
       "header",
       { className: "" },
+      React.createElement("img", {
+        src: "https://images.alphacoders.com/603/thumb-1920-603479.png",
+        alt: "Background image",
+        className: "w-full h-auto bg-cover",
+      }),
       React.createElement(
         "h1",
         { className: "text-yellow-400 text-3xl text-center font-bold m-3" },
         "Pokédex"
       )
     ),
+
     React.createElement(PokemonList, null)
   );
 }
