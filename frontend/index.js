@@ -53,7 +53,7 @@ function PokemonCard(props) {
       "div",
       {
         className:
-          "bg-[white]/20 rounded-md flex flex-col justify-center items-center font-mono  h-80 w-52",
+          "bg-[white]/20 rounded-md flex flex-col justify-center items-center font-mono h-80 w-52",
       },
       React.createElement("img", {
         className: "w-44 transition-transform hover:scale-125 duration-200",

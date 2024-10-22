@@ -91,7 +91,11 @@ function PokemonCard(props) {
       src: props.cries1,
       className: "m-3",
     }),
-    React.createElement("audio", { controls: true, src: props.cries2 })
+    React.createElement("audio", {
+      controls: true,
+      src: props.cries2,
+      className: "mb-3",
+    })
   );
 }
 
