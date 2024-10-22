@@ -1,9 +1,9 @@
 let pokemonData = [];
 
 // Fetch data from mock server
-async function fetchPokemon() {
+async function fetchPokemon(id) {
   try {
-    const response = await fetch("http://localhost:3000/pokemon");
+    const response = await fetch(`http://localhost:3000/pokemon/${id}`);
     if (!response.ok) {
       throw new Error("http call failed");
     }
@@ -18,10 +18,6 @@ async function fetchPokemon() {
 
 // Card component
 function PokemonCard(props) {
-  function click() {
-    window.location.href = `pokemon-detail.html?id=${props.id}`;
-  }
-
   const typeStyles = {
     grass: "bg-green-700 rounded-sm p-1 m-1 w-20 text-center text-white",
     poison: "bg-purple-500 rounded-sm p-1 m-1 w-20 text-center text-white",
@@ -44,68 +40,82 @@ function PokemonCard(props) {
   return React.createElement(
     "div",
     {
-      className:
-        // "bg-[white]/20 rounded-md m-1 w-1/4 flex flex-col justify-center items-center font-mono",
-        "m-2 relative cursor-pointer",
-      onClick: click,
+      className: "flex flex-col justify-center items-center font-mono h-full",
     },
+    React.createElement("img", {
+      className: "w-60",
+      src: props.image,
+      alt: props.name,
+    }),
+    React.createElement(
+      "h1",
+      { className: "text-white text-center text-4xl" },
+      null,
+      props.name
+    ),
     React.createElement(
       "div",
-      {
-        className:
-          "bg-[white]/20 rounded-md flex flex-col justify-center items-center font-mono  h-80 w-52",
-      },
-      React.createElement("img", {
-        className: "w-44 transition-transform hover:scale-125 duration-200",
-        src: props.image,
-        alt: props.name,
-      }),
-      React.createElement(
-        "h2",
-        { className: "text-white text-center text-xl" },
-        null,
-        props.name
-      ),
-      React.createElement(
-        "div",
-        { className: "flex" },
-        React.createElement("p"),
-        props.types.map((t) =>
-          React.createElement(
-            "span",
-            {
-              id: t,
-              className: typeStyles[t],
-            },
-            t
-          )
+      { className: "flex" },
+      React.createElement("p"),
+      props.types.map((t) =>
+        React.createElement(
+          "span",
+          {
+            id: t,
+            className: typeStyles[t],
+          },
+          t
         )
       )
-    )
+    ),
+    React.createElement(
+      "p",
+      { className: "text-white mt-3" },
+      null,
+      `Abilities: ${props.abilities}`
+    ),
+    React.createElement(
+      "p",
+      { className: "text-white mt-3 " },
+      null,
+      `Height: ${props.height} m`
+    ),
+    React.createElement(
+      "p",
+      { className: "text-white mt-3" },
+      null,
+      `Weight: ${props.weight} kg`
+    ),
+    React.createElement("audio", {
+      controls: true,
+      src: props.cries1,
+      className: "m-3",
+    }),
+    React.createElement("audio", { controls: true, src: props.cries2 })
   );
 }
 
-// List component
 function PokemonList() {
-  if (pokemonData.length === 0) {
+  if (!pokemonData) {
     return React.createElement(
       "p",
       { className: "text-center" },
-      "Loading Pokemon data..."
+      "Loading Pokémon data..."
     );
   }
-
   return React.createElement(
     "div",
-    { className: "flex flex-wrap justify-center" },
-    pokemonData.map((pokemon) =>
-      React.createElement(PokemonCard, {
-        id: pokemon.id,
-        name: pokemon.name,
-        types: pokemon.types,
-        image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`,
-      })
-    )
+    { className: "flex justify-center" },
+    React.createElement(PokemonCard, {
+      name: pokemonData.name,
+      types: pokemonData.types,
+      image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonData.id}.png`,
+      abilities: pokemonData.abilities,
+      height: pokemonData.height,
+      weight: pokemonData.weight,
+      cries1: pokemonData.cries.latest,
+      cries2: pokemonData.cries.legacy,
+    })
   );
 }
 
@@ -114,21 +124,7 @@ function App() {
   return React.createElement(
     "div",
     { className: "" },
-    React.createElement(
-      "header",
-      { className: "" },
-      React.createElement("img", {
-        src: "https://images.alphacoders.com/603/thumb-1920-603479.png",
-        alt: "Background image",
-        className: "w-full h-auto bg-cover",
-      }),
-      React.createElement(
-        "h1",
-        { className: "text-yellow-400 text-3xl text-center font-bold m-3" },
-        "Pokédex"
-      )
-    ),
-
+    React.createElement("header", { className: "" }),
     React.createElement(PokemonList, null)
   );
 }
@@ -138,8 +134,7 @@ function renderApp() {
   ReactDOM.render(React.createElement(App), document.getElementById("root"));
 }
 
-// Initial render
-renderApp();
-
+const params = new URLSearchParams(window.location.search);
+const pokemonId = params.get("id");
 // Fetch and display the Pokemon data
-fetchPokemon();
+fetchPokemon(pokemonId);
