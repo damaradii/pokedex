@@ -35,6 +35,7 @@ function PokemonCard(props) {
     steel: "bg-neutral-400 rounded-sm p-1 m-1 w-20 text-center text-white",
     ghost: "bg-indigo-800 rounded-sm p-1 m-1 w-20 text-center text-white",
     ice: "bg-blue-300 rounded-sm p-1 m-1 w-20 text-center text-white",
+    dragon: "bg-blue-900 rounded-sm p-1 m-1 w-20 text-center text-white",
   };
 
   return React.createElement(
